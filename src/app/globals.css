@@ -1,0 +1,91 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --background: #FAF7F2;
+    --foreground: #1A1612;
+    --card: #FFFFFF;
+    --card-foreground: #1A1612;
+    --primary: #C2671A;
+    --primary-foreground: #FFFFFF;
+    --secondary: #F3ECE2;
+    --secondary-foreground: #2A1E14;
+    --muted: #F0E8DC;
+    --muted-foreground: #6B5E51;
+    --accent: #D97706;
+    --accent-foreground: #1A1612;
+    --border: #E8DFD3;
+    --ring: #C2671A;
+    --navy-brand: #002266;
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  overflow-x: hidden;
+}
+
+/* Subtle architectural dot grid background */
+.bg-tech-dots {
+  background-image: radial-gradient(rgba(194, 103, 26, 0.09) 1.2px, transparent 1.2px), radial-gradient(rgba(0, 34, 102, 0.05) 1.2px, transparent 1.2px);
+  background-size: 32px 32px;
+  background-position: 0 0, 16px 16px;
+}
+
+/* Polished glass panels */
+.glass-panel {
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(232, 223, 211, 0.85);
+}
+
+/* Sleek interactive spotlight card */
+.spotlight-card {
+  position: relative;
+  background: #FFFFFF;
+  border: 1px solid #E8DFD3;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.spotlight-card:hover {
+  transform: translateY(-3px);
+  border-color: #D97706;
+  box-shadow: 0 12px 32px -8px rgba(194, 103, 26, 0.12);
+}
+
+/* Custom modern scrollbar */
+::-webkit-scrollbar {
+  width: 7px;
+}
+::-webkit-scrollbar-track {
+  background: #FAF7F2;
+}
+::-webkit-scrollbar-thumb {
+  background: #D97706;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #B45309;
+}
+
+@keyframes marquee {
+  0% { transform: translateX(0%); }
+  100% { transform: translateX(-50%); }
+}
+
+.animate-marquee {
+  display: flex;
+  width: max-content;
+  animation: marquee 35s linear infinite;
+}
+
+.animate-marquee:hover {
+  animation-play-state: paused;
+}
