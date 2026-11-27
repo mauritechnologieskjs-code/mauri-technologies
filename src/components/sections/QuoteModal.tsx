@@ -24,6 +24,8 @@ export function QuoteModal({
   const [phone, setPhone] = useState("");
   const [message, setMessage] = useState("");
   const [submitted, setSubmitted] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   if (!isOpen) return null;
 
@@ -46,9 +48,34 @@ export function QuoteModal({
     }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setSubmitted(true);
+    setIsLoading(true);
+    setErrorMessage("");
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name,
+          email,
+          phone,
+          services: selectedServices,
+          timeline,
+          message,
+          formType: "consultation",
+        }),
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        throw new Error(data.error || "Failed to submit request.");
+      }
+      setSubmitted(true);
+    } catch (err: any) {
+      setErrorMessage(err.message || "Failed to send consultation request. Please try again.");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -190,13 +217,29 @@ export function QuoteModal({
                 />
               </div>
 
+              {errorMessage && (
+                <div className="p-3 rounded-xl bg-rose-500/10 border border-rose-500/30 text-rose-700 text-xs font-semibold">
+                  {errorMessage}
+                </div>
+              )}
+
               {/* Submit Button */}
               <button
                 type="submit"
-                className="w-full flex items-center justify-center gap-2 py-3.5 rounded-xl bg-[#C2671A] hover:bg-[#A35210] text-white font-bold text-sm shadow-md transition-transform active:scale-95"
+                disabled={isLoading}
+                className="w-full flex items-center justify-center gap-2 py-3.5 rounded-xl bg-[#C2671A] hover:bg-[#A35210] disabled:opacity-60 text-white font-bold text-sm shadow-md transition-transform active:scale-95 cursor-pointer"
               >
-                <Send className="w-4 h-4" />
-                <span>Submit Consultation Request</span>
+                {isLoading ? (
+                  <>
+                    <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                    <span>Sending to Mauri Team...</span>
+                  </>
+                ) : (
+                  <>
+                    <Send className="w-4 h-4" />
+                    <span>Submit Consultation Request</span>
+                  </>
+                )}
               </button>
             </form>
           </div>

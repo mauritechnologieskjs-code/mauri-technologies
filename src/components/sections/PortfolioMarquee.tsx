@@ -1,8 +1,15 @@
 import React from "react";
+import Image from "next/image";
 import { Star, Building2, ExternalLink } from "lucide-react";
 
 export function PortfolioMarquee() {
   const partnerSectors = [
+    {
+      name: "Cleaning Duck Australia",
+      sector: "Commercial Cleaning & Booking",
+      city: "Australia",
+      logo: "/cleaning-duck-logo.png",
+    },
     { name: "Kathmandu Health Clinic", sector: "Healthcare & Appointment Booking", city: "Kathmandu" },
     { name: "Himalayan Roast Cafe", sector: "Hospitality & Digital Menu", city: "Lalitpur" },
     { name: "Everest Trek & Tours", sector: "Tourism & Booking Engine", city: "Thamel" },
@@ -10,10 +17,21 @@ export function PortfolioMarquee() {
     { name: "Patan Heritage Hotel", sector: "Hotel Management & Reservation", city: "Patan" },
     { name: "Nepal Logistics Network", sector: "Commercial Fleet Dispatch", city: "Birgunj" },
     { name: "Shikshya Academy", sector: "Educational Institute Portal", city: "Kathmandu" },
-    { name: "Chitwan Agro Hub", sector: "B2B Supply & Distribution", city: "Chitwan" },
   ];
 
   const featuredProjects = [
+    {
+      title: "Cleaning Duck Australia",
+      domain: "cleaningduckaustralia.com.au",
+      url: "https://cleaningduckaustralia.com.au",
+      logo: "/cleaning-duck-logo.png",
+      category: "Commercial Platform · Live Website",
+      highlight: "Crafted by Mauri Technologies",
+      description:
+        "Complete modern website and service booking platform designed and built by Mauri Technologies for Cleaning Duck Australia. Featuring mobile-responsive quote funnels, service catalogs, and instant inquiry routing.",
+      stack: ["Next.js", "Tailwind CSS", "Booking Funnel", "SEO Schema", "Cloud Hosting"],
+      isLive: true,
+    },
     {
       title: "Clinic Appointment & Patient Records System",
       category: "Healthcare Software",
@@ -21,6 +39,7 @@ export function PortfolioMarquee() {
       description:
         "Engineered an intuitive web-based patient management system for a busy Kathmandu clinic, featuring automated appointment reminders and doctor scheduling.",
       stack: ["Next.js", "TypeScript", "PostgreSQL", "SMS Gateway"],
+      isLive: false,
     },
     {
       title: "Cafe & Restaurant QR Digital Menu & POS",
@@ -29,14 +48,7 @@ export function PortfolioMarquee() {
       description:
         "Developed a mobile-optimized contactless QR menu and cloud kitchen order ticketing system that syncs directly with table orders in real time.",
       stack: ["React", "Node.js", "Tailwind CSS", "Prisma"],
-    },
-    {
-      title: "Himalayan Travel & Tour Booking Platform",
-      category: "eCommerce & Booking",
-      highlight: "Global Payment & Inquiry Funnel",
-      description:
-        "Built an interactive travel website with itinerary builders, multi-currency inquiry routing, and technical SEO designed for international trek inquiries.",
-      stack: ["Next.js", "Tailwind CSS", "SEO Schema", "Cloudflare"],
+      isLive: false,
     },
   ];
 
@@ -70,9 +82,21 @@ export function PortfolioMarquee() {
                 key={idx}
                 className="shrink-0 flex items-center gap-3 px-5 py-2.5 rounded-2xl bg-[#FAF7F2] border border-[#E8DFD3] shadow-sm"
               >
-                <div className="w-7 h-7 rounded-lg bg-amber-500/15 text-[#C2671A] flex items-center justify-center font-bold text-xs">
-                  {item.name.substring(0, 2).toUpperCase()}
-                </div>
+                {item.logo ? (
+                  <div className="w-8 h-8 rounded-lg bg-white p-1 border border-[#E8DFD3] flex items-center justify-center shrink-0 shadow-xs">
+                    <Image
+                      src={item.logo}
+                      alt={item.name}
+                      width={28}
+                      height={28}
+                      className="object-contain"
+                    />
+                  </div>
+                ) : (
+                  <div className="w-8 h-8 rounded-lg bg-amber-500/15 text-[#C2671A] flex items-center justify-center font-bold text-xs shrink-0">
+                    {item.name.substring(0, 2).toUpperCase()}
+                  </div>
+                )}
                 <div>
                   <h4 className="text-xs font-bold text-[#1A1612]">
                     {item.name}
@@ -105,12 +129,46 @@ export function PortfolioMarquee() {
                   </span>
                 </div>
 
-                <h3 className="text-lg font-black text-[#1A1612] mb-2.5">
-                  {proj.title}
-                </h3>
-                <p className="text-xs sm:text-sm text-[#5C4F42] leading-relaxed mb-6">
+                <div className="flex items-center gap-3 mb-2.5">
+                  {proj.logo && (
+                    <div className="w-11 h-11 rounded-xl bg-white p-1 border border-[#E8DFD3] flex items-center justify-center shrink-0 shadow-sm">
+                      <Image
+                        src={proj.logo}
+                        alt={`${proj.title} Logo`}
+                        width={36}
+                        height={36}
+                        className="object-contain"
+                      />
+                    </div>
+                  )}
+                  <div>
+                    <h3 className="text-lg font-black text-[#1A1612] leading-tight">
+                      {proj.title}
+                    </h3>
+                    {proj.domain && (
+                      <span className="text-[11px] text-[#7A6B5D] font-mono">
+                        {proj.domain}
+                      </span>
+                    )}
+                  </div>
+                </div>
+                <p className="text-xs sm:text-sm text-[#5C4F42] leading-relaxed mb-4">
                   {proj.description}
                 </p>
+
+                {proj.isLive && proj.url && (
+                  <div className="mb-4">
+                    <a
+                      href={proj.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-xl bg-amber-500/15 border border-amber-500/30 text-[#A35210] hover:bg-[#C2671A] hover:text-white transition-all text-xs font-bold shadow-sm group"
+                    >
+                      <span>{proj.domain}</span>
+                      <ExternalLink className="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                    </a>
+                  </div>
+                )}
               </div>
 
               <div>

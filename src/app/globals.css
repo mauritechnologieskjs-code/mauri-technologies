@@ -75,6 +75,18 @@ body {
   background: #B45309;
 }
 
+/* Hide Next.js dev indicator badge completely */
+[data-nextjs-dev-tools-indicator],
+[data-next-badge],
+nextjs-portal,
+#nextjs-dev-tools,
+div[data-nextjs-toast="true"],
+div[data-nextjs-route-announcer="true"] {
+  display: none !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
+
 @keyframes marquee {
   0% { transform: translateX(0%); }
   100% { transform: translateX(-50%); }

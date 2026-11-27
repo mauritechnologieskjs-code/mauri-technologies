@@ -2,14 +2,15 @@
 
 import React, { useState } from "react";
 import {
-  PhoneCall,
-  FileText,
+  MessageSquare,
+  FileCheck2,
   Code2,
   CheckCircle,
   Rocket,
-  ArrowRight,
   ShieldCheck,
-  CheckCircle2,
+  ArrowRight,
+  Clock,
+  Sparkles,
 } from "lucide-react";
 
 export function ProcessSection() {
@@ -18,73 +19,43 @@ export function ProcessSection() {
   const steps = [
     {
       step: "01",
-      icon: PhoneCall,
-      title: "Initial Consultation & Discovery",
-      subtitle: "Understanding your exact business model, target clientele, and digital goals.",
-      duration: "1 - 2 Days",
-      checklist: [
-        "In-depth discussion on business objectives & pain points",
-        "Analysis of local & global competitor websites",
-        "Feature prioritization (e.g. WhatsApp booking, POS sync, contact forms)",
-        "Clear recommendation on optimal tech stack & hosting",
-      ],
-      output: "Discovery Brief & Feature Roadmap",
+      icon: MessageSquare,
+      title: "Inquiry & Consultation",
+      subtitle: "Quick discovery via WhatsApp, call, or Kathmandu meeting to understand your goals, target customers, and required features.",
+      duration: "1 – 2 Days",
+      deliverable: "Project Brief & Roadmap",
     },
     {
       step: "02",
-      icon: FileText,
-      title: "Architecture & Scope Agreement",
-      subtitle: "Locking down transparent deliverables, timelines, and technical blueprints.",
-      duration: "3 - 5 Days",
-      checklist: [
-        "Interactive wireframes and page structure diagrams",
-        "Formal proposal with itemized milestones and timeline",
-        "Clear project contract and mutual agreement",
-        "Domain reservation and server infrastructure initialization",
-      ],
-      output: "Formal Proposal & Design Wireframe",
+      icon: FileCheck2,
+      title: "Scope & Architecture",
+      subtitle: "Clear proposal with itemized milestones, wireframes, and fixed timeline so you know exactly what is being built without surprises.",
+      duration: "2 – 3 Days",
+      deliverable: "Scope Agreement & Wireframes",
     },
     {
       step: "03",
       icon: Code2,
-      title: "Agile Development Sprints",
-      subtitle: "Writing clean, mobile-first code with regular milestone updates.",
+      title: "Design & Development",
+      subtitle: "Writing clean, mobile-first code with modern frameworks. We share private staging preview links so you watch the build progress live.",
       duration: "Sprint Cycles",
-      checklist: [
-        "Mobile-first responsive frontend development (Next.js / Tailwind)",
-        "Database schema modeling and custom backend API integration",
-        "Integration of Google Maps, WhatsApp chat, and forms",
-        "Weekly progress demos on private staging links",
-      ],
-      output: "Private Staging Deployment for Testing",
+      deliverable: "Live Staging Preview Link",
     },
     {
       step: "04",
       icon: CheckCircle,
-      title: "Client Review & Feedback Iteration",
-      subtitle: "Refining every detail until the software meets your exacting standards.",
-      duration: "3 - 7 Days",
-      checklist: [
-        "Comprehensive walkthrough with your internal team",
-        "Feedback gathering and fine-tuning typography & layout",
-        "Cross-browser and mobile device compatibility testing",
-        "Speed optimization and Core Web Vitals audit",
-      ],
-      output: "Client Sign-Off & Production Approval",
+      title: "Review & Polish",
+      subtitle: "Hands-on walkthrough with your team. We fine-tune design, verify responsive viewports, and audit loading speeds on all devices.",
+      duration: "2 – 4 Days",
+      deliverable: "Final Approval & Testing",
     },
     {
       step: "05",
       icon: Rocket,
-      title: "Launch, Training & Continuous Support",
-      subtitle: "Going live smoothly with continuous backups, security, and maintenance.",
-      duration: "Ongoing Support",
-      checklist: [
-        "DNS migration, custom domain setup (.com.np / .com), and SSL activation",
-        "Google Business Profile verification and Maps ranking optimization",
-        "Staff training on managing the website or POS/inventory software",
-        "Proactive monthly security patching, backups, and tech support",
-      ],
-      output: "Live Web Address & Active Maintenance SLA",
+      title: "Live Launch & Support",
+      subtitle: "Connecting your custom domain (.com.np / .com), SSL security, Google Maps profile, plus continuous maintenance and backups.",
+      duration: "Live & Ongoing",
+      deliverable: "Live Website & Maintenance",
     },
   ];
 
@@ -93,7 +64,7 @@ export function ProcessSection() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Heading */}
-        <div className="max-w-3xl mb-14">
+        <div className="max-w-3xl mb-12">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/15 border border-amber-500/30 text-amber-900 text-xs font-bold uppercase tracking-wider mb-4">
             <ShieldCheck className="w-3.5 h-3.5" />
             <span>Structured Client Lifecycle</span>
@@ -103,112 +74,85 @@ export function ProcessSection() {
             <span className="text-[#C2671A]">From Inquiry to Live Launch</span>.
           </h2>
           <p className="text-base text-[#5C4F42]">
-            A transparent, predictable 5-step delivery process designed to keep you informed at every milestone without surprises.
+            A simple, predictable 5-step journey designed to keep you informed at every milestone without confusion or delays.
           </p>
         </div>
 
-        {/* Interactive Progress Tabs */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 mb-10">
+        {/* Simplified 5-Step Process Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-5 gap-4 mb-10">
           {steps.map((item, idx) => {
             const Icon = item.icon;
             const isSelected = activeStep === idx;
             return (
-              <button
+              <div
                 key={item.step}
                 onClick={() => setActiveStep(idx)}
-                className={`text-left p-4 rounded-2xl border transition-all ${
+                className={`p-6 rounded-3xl cursor-pointer transition-all flex flex-col justify-between border ${
                   isSelected
-                    ? "bg-white border-[#C2671A] shadow-md ring-2 ring-[#C2671A]/20"
-                    : "bg-white/70 border-[#E8DFD3] hover:border-[#C2671A]/40"
+                    ? "bg-white border-[#C2671A] shadow-lg ring-2 ring-[#C2671A]/20 scale-[1.02]"
+                    : "bg-white/80 border-[#E8DFD3] hover:border-[#C2671A]/40 hover:bg-white"
                 }`}
               >
-                <div className="flex items-center justify-between mb-2">
-                  <span
-                    className={`text-xs font-mono font-bold ${
-                      isSelected ? "text-[#C2671A]" : "text-[#7A6B5D]"
-                    }`}
-                  >
-                    STEP {item.step}
-                  </span>
-                  <div
-                    className={`w-7 h-7 rounded-lg flex items-center justify-center ${
-                      isSelected ? "bg-[#C2671A] text-white" : "bg-[#F3ECE2] text-[#6B5E51]"
-                    }`}
-                  >
-                    <Icon className="w-3.5 h-3.5" />
+                <div>
+                  <div className="flex items-center justify-between mb-4">
+                    <span
+                      className={`text-2xl font-mono font-black ${
+                        isSelected ? "text-[#C2671A]" : "text-[#9E8E7D]"
+                      }`}
+                    >
+                      {item.step}
+                    </span>
+                    <div
+                      className={`w-10 h-10 rounded-xl flex items-center justify-center transition-colors ${
+                        isSelected
+                          ? "bg-[#C2671A] text-white shadow-md shadow-amber-900/20"
+                          : "bg-amber-500/15 text-[#C2671A]"
+                      }`}
+                    >
+                      <Icon className="w-5 h-5" />
+                    </div>
+                  </div>
+
+                  <h3 className="text-base font-bold text-[#1A1612] mb-2 leading-snug">
+                    {item.title}
+                  </h3>
+
+                  <p className="text-xs text-[#5C4F42] leading-relaxed mb-4">
+                    {item.subtitle}
+                  </p>
+                </div>
+
+                <div className="pt-3 border-t border-[#E8DFD3]/80 space-y-2">
+                  <div className="flex items-center gap-1.5 text-[11px] font-semibold text-[#7A6B5D]">
+                    <Clock className="w-3 h-3 text-[#C2671A]" />
+                    <span>{item.duration}</span>
+                  </div>
+                  <div className="text-[10.5px] font-bold text-[#A35210] bg-amber-500/10 px-2 py-0.5 rounded-md inline-block">
+                    ✓ {item.deliverable}
                   </div>
                 </div>
-                <h4 className="text-xs font-bold text-[#1A1612] line-clamp-1">
-                  {item.title}
-                </h4>
-              </button>
+              </div>
             );
           })}
         </div>
 
-        {/* Selected Step Detail Panel */}
-        <div className="p-8 sm:p-10 rounded-3xl bg-white border border-[#E8DFD3] shadow-md">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-            
-            <div className="lg:col-span-7">
-              <div className="flex items-center gap-3 mb-3">
-                <span className="text-3xl font-black text-[#C2671A] font-mono">
-                  {steps[activeStep].step}
-                </span>
-                <div>
-                  <h3 className="text-2xl font-black text-[#1A1612]">
-                    {steps[activeStep].title}
-                  </h3>
-                  <span className="text-xs text-[#7A6B5D] font-medium">
-                    Typical Duration: {steps[activeStep].duration}
-                  </span>
-                </div>
-              </div>
-
-              <p className="text-base text-[#5C4F42] mb-6 leading-relaxed">
-                {steps[activeStep].subtitle}
-              </p>
-
-              {/* Checklist */}
-              <div className="space-y-3 mb-6">
-                {steps[activeStep].checklist.map((item, idx) => (
-                  <div key={idx} className="flex items-start gap-2.5 text-sm text-[#2A1E14]">
-                    <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
-                    <span>{item}</span>
-                  </div>
-                ))}
-              </div>
-
-              {/* Output Tag */}
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-xl bg-amber-500/15 border border-amber-500/30 text-xs font-bold text-amber-900">
-                <span>Phase Deliverable:</span>
-                <span className="underline">{steps[activeStep].output}</span>
-              </div>
-            </div>
-
-            {/* Quick Guarantees Card */}
-            <div className="lg:col-span-5 p-6 rounded-2xl bg-[#FAF7F2] border border-[#E8DFD3] space-y-3.5 text-xs">
-              <h4 className="font-bold uppercase tracking-wider text-[#1A1612] text-xs pb-2 border-b border-[#E8DFD3]">
-                Mauri Quality Standards
-              </h4>
-              <div className="flex items-center justify-between">
-                <span className="text-[#5C4F42]">Code Quality:</span>
-                <span className="font-bold text-[#1A1612]">Modular & Clean Code</span>
-              </div>
-              <div className="flex items-center justify-between">
-                <span className="text-[#5C4F42]">Client Communication:</span>
-                <span className="font-bold text-[#1A1612]">WhatsApp & Phone Updates</span>
-              </div>
-              <div className="flex items-center justify-between">
-                <span className="text-[#5C4F42]">Security:</span>
-                <span className="font-bold text-emerald-700">SSL & Daily Backups</span>
-              </div>
-              <div className="flex items-center justify-between">
-                <span className="text-[#5C4F42]">Post-Launch:</span>
-                <span className="font-bold text-[#C2671A]">Ongoing Maintenance</span>
-              </div>
-            </div>
-
+        {/* Simple Guarantee Badges */}
+        <div className="p-6 rounded-2xl bg-white border border-[#E8DFD3] grid grid-cols-2 sm:grid-cols-4 gap-4 text-center">
+          <div className="space-y-1">
+            <span className="text-xs font-bold text-[#1A1612] block">Clean & Modular Code</span>
+            <span className="text-[11px] text-[#7A6B5D]">Zero Bloat · Mobile-First</span>
+          </div>
+          <div className="space-y-1">
+            <span className="text-xs font-bold text-[#1A1612] block">WhatsApp & Phone Updates</span>
+            <span className="text-[11px] text-[#7A6B5D]">Direct Founder Contact</span>
+          </div>
+          <div className="space-y-1">
+            <span className="text-xs font-bold text-emerald-700 block">SSL & Daily Backups</span>
+            <span className="text-[11px] text-[#7A6B5D]">Bank-Grade Security</span>
+          </div>
+          <div className="space-y-1">
+            <span className="text-xs font-bold text-[#C2671A] block">Always Open for Inquiry</span>
+            <span className="text-[11px] text-[#7A6B5D]">Kathmandu Local Support</span>
           </div>
         </div>
 

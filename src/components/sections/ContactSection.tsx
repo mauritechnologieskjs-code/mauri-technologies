@@ -13,6 +13,8 @@ import {
 
 export function ContactSection() {
   const [submitted, setSubmitted] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -21,9 +23,29 @@ export function ContactSection() {
     message: "",
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setSubmitted(true);
+    setIsLoading(true);
+    setErrorMessage("");
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          ...formData,
+          formType: "inquiry",
+        }),
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        throw new Error(data.error || "Failed to send message. Please try again.");
+      }
+      setSubmitted(true);
+    } catch (err: any) {
+      setErrorMessage(err.message || "Failed to send message. Please try again.");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -60,13 +82,12 @@ export function ContactSection() {
                     Kathmandu Office
                   </h4>
                   <p className="text-xs text-[#5C4F42] leading-relaxed mb-3">
-                    Mauri Technologies Pvt. Ltd. <br />
-                    New Baneshwor, Kathmandu 44600 <br />
-                    Bagmati Province, Nepal
+                    Mauri Technologies <br />
+                    Kathmandu, Nepal
                   </p>
                   <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-500/15 text-emerald-800 text-[10.5px] font-bold">
                     <span className="w-1.5 h-1.5 rounded-full bg-emerald-600 animate-pulse" />
-                    Available for in-person meetings
+                    Always open for inquiry & collaboration
                   </span>
                 </div>
               </div>
@@ -83,10 +104,10 @@ export function ContactSection() {
                     Direct Email
                   </span>
                   <a
-                    href="mailto:hello@mauritech.com.np"
+                    href="mailto:mauritechnologies.kjs@gmail.com"
                     className="text-sm font-bold text-[#1A1612] hover:text-[#C2671A] transition-colors"
                   >
-                    hello@mauritech.com.np
+                    mauritechnologies.kjs@gmail.com
                   </a>
                 </div>
               </div>
@@ -99,12 +120,21 @@ export function ContactSection() {
                   <span className="text-[10px] font-bold uppercase tracking-wider text-[#7A6B5D] block">
                     Phone & WhatsApp
                   </span>
-                  <a
-                    href="tel:+97714782910"
-                    className="text-sm font-bold text-[#1A1612] hover:text-[#C2671A] transition-colors"
-                  >
-                    +977 1 4782910 / +977 980-1234567
-                  </a>
+                  <div className="flex items-center gap-2 flex-wrap">
+                    <a
+                      href="tel:9806362050"
+                      className="text-sm font-bold text-[#1A1612] hover:text-[#C2671A] transition-colors"
+                    >
+                      9806362050
+                    </a>
+                    <span className="text-stone-400">/</span>
+                    <a
+                      href="tel:9810096615"
+                      className="text-sm font-bold text-[#1A1612] hover:text-[#C2671A] transition-colors"
+                    >
+                      9810096615
+                    </a>
+                  </div>
                 </div>
               </div>
 
@@ -114,10 +144,11 @@ export function ContactSection() {
                 </div>
                 <div>
                   <span className="text-[10px] font-bold uppercase tracking-wider text-[#7A6B5D] block">
-                    Operating Hours
+                    Operating Days
                   </span>
-                  <span className="text-xs font-semibold text-[#1A1612]">
-                    Sunday – Friday: 9:00 AM – 6:00 PM NPT
+                  <span className="text-xs font-semibold text-[#1A1612] flex items-center gap-1.5">
+                    <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                    Always Open for Inquiry
                   </span>
                 </div>
               </div>
@@ -220,12 +251,28 @@ export function ContactSection() {
                     />
                   </div>
 
+                  {errorMessage && (
+                    <div className="p-3 rounded-xl bg-rose-500/10 border border-rose-500/30 text-rose-700 text-xs font-semibold">
+                      {errorMessage}
+                    </div>
+                  )}
+
                   <button
                     type="submit"
-                    className="w-full flex items-center justify-center gap-2 py-3.5 rounded-xl bg-[#C2671A] hover:bg-[#A35210] text-white font-bold text-sm shadow-md transition-all active:scale-95"
+                    disabled={isLoading}
+                    className="w-full flex items-center justify-center gap-2 py-3.5 rounded-xl bg-[#C2671A] hover:bg-[#A35210] disabled:opacity-60 text-white font-bold text-sm shadow-md transition-all active:scale-95 cursor-pointer"
                   >
-                    <Send className="w-4 h-4" />
-                    <span>Submit Inquiry</span>
+                    {isLoading ? (
+                      <>
+                        <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                        <span>Sending to Kathmandu Office...</span>
+                      </>
+                    ) : (
+                      <>
+                        <Send className="w-4 h-4" />
+                        <span>Submit Inquiry</span>
+                      </>
+                    )}
                   </button>
                 </form>
               ) : (
