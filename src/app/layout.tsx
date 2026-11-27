@@ -29,11 +29,19 @@ export const metadata: Metadata = {
     "Cloud DevOps Solutions",
   ],
   authors: [{ name: "Mauri Technologies" }],
+  icons: {
+    icon: [
+      { url: "/favicon.ico", sizes: "any" },
+      { url: "/icon.png", type: "image/png", sizes: "32x32" },
+    ],
+    shortcut: "/favicon.ico",
+    apple: "/apple-touch-icon.png",
+  },
   openGraph: {
     title: "Mauri Technologies | Innovation Driven Software Engineering Nepal",
     description:
       "Turning complex business ideas into scalable digital solutions. Custom software, mobile apps, UI/UX, and cloud infrastructure.",
-    url: "https://mauritech.com.np",
+    url: "https://mauritechnologies.com.np",
     siteName: "Mauri Technologies",
     locale: "en_US",
     type: "website",
