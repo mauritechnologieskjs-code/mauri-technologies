@@ -1,11 +1,22 @@
 import { NextResponse } from "next/server";
 import { Resend } from "resend";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
-const TO_EMAIL = process.env.CONTACT_EMAIL_TO || "mauritechnologies.kjs@gmail.com";
+export const dynamic = "force-dynamic";
 
 export async function POST(req: Request) {
   try {
+    const apiKey = process.env.RESEND_API_KEY;
+    if (!apiKey) {
+      console.error("RESEND_API_KEY environment variable is not set.");
+      return NextResponse.json(
+        { error: "Email service configuration is missing. Please set RESEND_API_KEY in your deployment environment." },
+        { status: 500 }
+      );
+    }
+
+    const resend = new Resend(apiKey);
+    const toEmail = process.env.CONTACT_EMAIL_TO || "mauritechnologies.kjs@gmail.com";
+
     const body = await req.json();
     const { name, email, phone, service, services, timeline, message, formType } = body;
 
@@ -97,7 +108,7 @@ export async function POST(req: Request) {
 
     const data = await resend.emails.send({
       from: "Mauri Technologies <onboarding@resend.dev>",
-      to: [TO_EMAIL],
+      to: [toEmail],
       replyTo: email,
       subject: subject,
       html: emailHtml,
